@@ -30,6 +30,7 @@ class dischargeRecord
 public:
 
   unsigned int hospitalServiceArea;
+  unsigned int hospitalCounty;
 
 };
 
@@ -67,6 +68,9 @@ int main( int argc, const char * argv[] )
     std::getline( inputFile, inputString );
     std::stringstream lineStream( inputString );
 
+    //
+    //  Parse the Hospital Service Area field
+    //
     std::getline( lineStream, inputField, ',' );
 
     stringVector::iterator serviceItr = std::find( HospitalServiceArea.begin(), HospitalServiceArea.end(), inputField );
@@ -80,6 +84,23 @@ int main( int argc, const char * argv[] )
       HospitalServiceArea.push_back( inputField );
       }
 
+    //
+    //  Parse the Hospital County field
+    //
+    std::getline( lineStream, inputField, ',' );
+
+    stringVector::iterator countyItr = std::find( HospitalCounties.begin(), HospitalCounties.end(), inputField );
+    if( countyItr != HospitalCounties.end() )
+      {
+      newRecord.hospitalCounty = countyItr - HospitalCounties.begin();
+      }
+    else
+      {
+      newRecord.hospitalCounty = HospitalCounties.size();
+      HospitalCounties.push_back( inputField );
+      }
+
+
     records.push_back( newRecord );
     }
 
@@ -89,7 +110,6 @@ int main( int argc, const char * argv[] )
   std::cout << records[0].hospitalServiceArea << std::endl;
 
   std::cout << "Service areas " << std::endl;
-
   stringVector::const_iterator hsaItr = HospitalServiceArea.begin();
   while( hsaItr != HospitalServiceArea.end() )
     {
@@ -97,6 +117,14 @@ int main( int argc, const char * argv[] )
     ++hsaItr;
     }
 
-  return 0;
+  std::cout << "Counties " << std::endl;
+  stringVector::const_iterator hcItr = HospitalCounties.begin();
+  while( hcItr != HospitalCounties.end() )
+    {
+    std::cout << *hcItr << std::endl;
+    ++hcItr;
+    }
+
+ return 0;
 }
 
