@@ -42,7 +42,7 @@
 
 #define PrintTable(name) \
   { \
-  std::cout << "#name" << std::endl; \
+  std::cout << #name << std::endl; \
   stringVector::const_iterator nameItr = name.begin(); \
   while( nameItr != name.end() ) \
     { \
@@ -62,6 +62,11 @@ public:
   unsigned int OperatingCertificateNumber;
   unsigned int FacilityId;
   unsigned int FacilityName;
+  unsigned int AgeGroup;
+  unsigned int ZipCode;
+  unsigned int Gender;
+  unsigned int Race;
+  unsigned int Ethnicity;
 
 };
 
@@ -74,6 +79,11 @@ stringVector HospitalCounty;
 stringVector OperatingCertificateNumber;
 stringVector FacilityId;
 stringVector FacilityName;
+stringVector AgeGroup;
+stringVector ZipCode;
+stringVector Gender;
+stringVector Race;
+stringVector Ethnicity;
 
 int main( int argc, const char * argv[] )
 {
@@ -104,6 +114,11 @@ int main( int argc, const char * argv[] )
     ParseFieldString(OperatingCertificateNumber);
     ParseFieldString(FacilityId);
     ParseFieldString(FacilityName);
+    ParseFieldString(AgeGroup);
+    ParseFieldString(ZipCode);
+    ParseFieldString(Gender);
+    ParseFieldString(Race);
+    ParseFieldString(Ethnicity);
 
     records.push_back( newRecord );
     }
@@ -114,6 +129,11 @@ int main( int argc, const char * argv[] )
   PrintTable(OperatingCertificateNumber);
   PrintTable(FacilityId);
   PrintTable(FacilityName);
+  PrintTable(AgeGroup);
+  PrintTable(ZipCode);
+  PrintTable(Gender);
+  PrintTable(Race);
+  PrintTable(Ethnicity);
 
   std::cout << "Headers = " << std::endl;
   std::cout << headers << std::endl;
