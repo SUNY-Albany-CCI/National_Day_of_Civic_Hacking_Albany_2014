@@ -25,6 +25,34 @@
 #include <algorithm>
 
 
+#define ParseFieldString(name) \
+    { \
+    std::getline( lineStream, inputField, ',' ); \
+    stringVector::iterator serviceItr = std::find( name.begin(), name.end(), inputField ); \
+    if( serviceItr != name.end() )   \
+      {   \
+      newRecord.name = serviceItr - name.begin();   \
+      }   \
+    else   \
+      {   \
+      newRecord.name = name.size();   \
+      name.push_back( inputField );   \
+      } \
+    }
+
+#define PrintTable(name) \
+  { \
+  std::cout << "#name" << std::endl; \
+  stringVector::const_iterator nameItr = name.begin(); \
+  while( nameItr != name.end() ) \
+    { \
+    std::cout << *nameItr << std::endl; \
+    ++nameItr; \
+    } \
+  }
+
+
+
 class dischargeRecord
 {
 public:
@@ -60,152 +88,37 @@ int main( int argc, const char * argv[] )
 
   std::getline( inputFile, headers );
 
-  std::cout << "Headers = " << std::endl;
-  std::cout << headers << std::endl;
-
   std::string inputString;
+  std::string inputField;
 
   dischargeRecord newRecord;
 
-  std::string inputField;
 
   while( !inputFile.eof() )
     {
     std::getline( inputFile, inputString );
     std::stringstream lineStream( inputString );
 
-    //
-    //  Parse the Hospital Service Area field
-    //
-    std::getline( lineStream, inputField, ',' );
-
-    stringVector::iterator serviceItr = std::find( HospitalServiceArea.begin(), HospitalServiceArea.end(), inputField );
-    if( serviceItr != HospitalServiceArea.end() )
-      {
-      newRecord.HospitalServiceArea = serviceItr - HospitalServiceArea.begin();
-      }
-    else
-      {
-      newRecord.HospitalServiceArea = HospitalServiceArea.size();
-      HospitalServiceArea.push_back( inputField );
-      }
-
-    //
-    //  Parse the Hospital County field
-    //
-    std::getline( lineStream, inputField, ',' );
-
-    stringVector::iterator countyItr = std::find( HospitalCounty.begin(), HospitalCounty.end(), inputField );
-    if( countyItr != HospitalCounty.end() )
-      {
-      newRecord.HospitalCounty = countyItr - HospitalCounty.begin();
-      }
-    else
-      {
-      newRecord.HospitalCounty = HospitalCounty.size();
-      HospitalCounty.push_back( inputField );
-      }
-
-    //
-    //  Parse the Operating Certificate Number field
-    //
-    std::getline( lineStream, inputField, ',' );
-
-    stringVector::iterator operatingCertificateItr = std::find( OperatingCertificateNumber.begin(), OperatingCertificateNumber.end(), inputField );
-    if( operatingCertificateItr != OperatingCertificateNumber.end() )
-      {
-      newRecord.OperatingCertificateNumber = operatingCertificateItr - OperatingCertificateNumber.begin();
-      }
-    else
-      {
-      newRecord.OperatingCertificateNumber = OperatingCertificateNumber.size();
-      OperatingCertificateNumber.push_back( inputField );
-      }
-
-    //
-    //  Parse the Facility Id field
-    //
-    std::getline( lineStream, inputField, ',' );
-
-    stringVector::iterator facilityIdItr = std::find( FacilityId.begin(), FacilityId.end(), inputField );
-    if( facilityIdItr != FacilityId.end() )
-      {
-      newRecord.FacilityId = facilityIdItr - FacilityId.begin();
-      }
-    else
-      {
-      newRecord.FacilityId = FacilityId.size();
-      FacilityId.push_back( inputField );
-      }
-
-    //
-    //  Parse the Facility Name field
-    //
-    std::getline( lineStream, inputField, ',' );
-
-    stringVector::iterator facilityNameItr = std::find( FacilityName.begin(), FacilityName.end(), inputField );
-    if( facilityNameItr != FacilityName.end() )
-      {
-      newRecord.FacilityName = facilityNameItr - FacilityName.begin();
-      }
-    else
-      {
-      newRecord.FacilityName = FacilityName.size();
-      FacilityName.push_back( inputField );
-      }
-
+    ParseFieldString(HospitalServiceArea);
+    ParseFieldString(HospitalCounty);
+    ParseFieldString(OperatingCertificateNumber);
+    ParseFieldString(FacilityId);
+    ParseFieldString(FacilityName);
 
     records.push_back( newRecord );
     }
 
-  std::cout << "Records read = " << records.size() << std::endl;
 
-  std::cout << "First record = " << std::endl;
-  std::cout << records[0].HospitalServiceArea << std::endl;
-
-  std::cout << "Service areas " << std::endl;
-  stringVector::const_iterator hsaItr = HospitalServiceArea.begin();
-  while( hsaItr != HospitalServiceArea.end() )
-    {
-    std::cout << *hsaItr << std::endl;
-    ++hsaItr;
-    }
-
-  std::cout << "Counties " << std::endl;
-  stringVector::const_iterator hcItr = HospitalCounty.begin();
-  while( hcItr != HospitalCounty.end() )
-    {
-    std::cout << *hcItr << std::endl;
-    ++hcItr;
-    }
-
-  std::cout << "Operating Certificate Numbers " << std::endl;
-  stringVector::const_iterator ocnItr = OperatingCertificateNumber.begin();
-  while( ocnItr != OperatingCertificateNumber.end() )
-    {
-    std::cout << *ocnItr << std::endl;
-    ++ocnItr;
-    }
-
-  std::cout << "Facility Ids " << std::endl;
-  stringVector::const_iterator fiItr = FacilityId.begin();
-  while( fiItr != FacilityId.end() )
-    {
-    std::cout << *fiItr << std::endl;
-    ++fiItr;
-    }
-
-  std::cout << "Facility Names " << std::endl;
-  stringVector::const_iterator fnItr = FacilityName.begin();
-  while( fnItr != FacilityName.end() )
-    {
-    std::cout << *fnItr << std::endl;
-    ++fnItr;
-    }
-
+  PrintTable(HospitalServiceArea);
+  PrintTable(HospitalCounty);
+  PrintTable(OperatingCertificateNumber);
+  PrintTable(FacilityId);
+  PrintTable(FacilityName);
 
   std::cout << "Headers = " << std::endl;
   std::cout << headers << std::endl;
+
+  std::cout << "Records read = " << records.size() << std::endl;
 
  return 0;
 }
