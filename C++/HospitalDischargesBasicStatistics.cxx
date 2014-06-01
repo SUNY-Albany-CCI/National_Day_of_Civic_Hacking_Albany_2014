@@ -29,11 +29,11 @@ class dischargeRecord
 {
 public:
 
-  unsigned int hospitalServiceArea;
-  unsigned int hospitalCounty;
-  unsigned int operatingCertificateNumber;
-  unsigned int facilityId;
-  unsigned int facilityName;
+  unsigned int HospitalServiceArea;
+  unsigned int HospitalCounty;
+  unsigned int OperatingCertificateNumber;
+  unsigned int FacilityId;
+  unsigned int FacilityName;
 
 };
 
@@ -42,10 +42,10 @@ typedef std::vector< dischargeRecord > dischargesRecords;
 typedef std::vector< std::string > stringVector;
 
 stringVector HospitalServiceArea;
-stringVector HospitalCounties;
-stringVector OperatingCertificateNumbers;
-stringVector FacilityIds;
-stringVector FacilityNames;
+stringVector HospitalCounty;
+stringVector OperatingCertificateNumber;
+stringVector FacilityId;
+stringVector FacilityName;
 
 int main( int argc, const char * argv[] )
 {
@@ -82,11 +82,11 @@ int main( int argc, const char * argv[] )
     stringVector::iterator serviceItr = std::find( HospitalServiceArea.begin(), HospitalServiceArea.end(), inputField );
     if( serviceItr != HospitalServiceArea.end() )
       {
-      newRecord.hospitalServiceArea = serviceItr - HospitalServiceArea.begin();
+      newRecord.HospitalServiceArea = serviceItr - HospitalServiceArea.begin();
       }
     else
       {
-      newRecord.hospitalServiceArea = HospitalServiceArea.size();
+      newRecord.HospitalServiceArea = HospitalServiceArea.size();
       HospitalServiceArea.push_back( inputField );
       }
 
@@ -95,15 +95,15 @@ int main( int argc, const char * argv[] )
     //
     std::getline( lineStream, inputField, ',' );
 
-    stringVector::iterator countyItr = std::find( HospitalCounties.begin(), HospitalCounties.end(), inputField );
-    if( countyItr != HospitalCounties.end() )
+    stringVector::iterator countyItr = std::find( HospitalCounty.begin(), HospitalCounty.end(), inputField );
+    if( countyItr != HospitalCounty.end() )
       {
-      newRecord.hospitalCounty = countyItr - HospitalCounties.begin();
+      newRecord.HospitalCounty = countyItr - HospitalCounty.begin();
       }
     else
       {
-      newRecord.hospitalCounty = HospitalCounties.size();
-      HospitalCounties.push_back( inputField );
+      newRecord.HospitalCounty = HospitalCounty.size();
+      HospitalCounty.push_back( inputField );
       }
 
     //
@@ -111,15 +111,15 @@ int main( int argc, const char * argv[] )
     //
     std::getline( lineStream, inputField, ',' );
 
-    stringVector::iterator operatingCertificateItr = std::find( OperatingCertificateNumbers.begin(), OperatingCertificateNumbers.end(), inputField );
-    if( operatingCertificateItr != OperatingCertificateNumbers.end() )
+    stringVector::iterator operatingCertificateItr = std::find( OperatingCertificateNumber.begin(), OperatingCertificateNumber.end(), inputField );
+    if( operatingCertificateItr != OperatingCertificateNumber.end() )
       {
-      newRecord.operatingCertificateNumber = operatingCertificateItr - OperatingCertificateNumbers.begin();
+      newRecord.OperatingCertificateNumber = operatingCertificateItr - OperatingCertificateNumber.begin();
       }
     else
       {
-      newRecord.operatingCertificateNumber = OperatingCertificateNumbers.size();
-      OperatingCertificateNumbers.push_back( inputField );
+      newRecord.OperatingCertificateNumber = OperatingCertificateNumber.size();
+      OperatingCertificateNumber.push_back( inputField );
       }
 
     //
@@ -127,15 +127,15 @@ int main( int argc, const char * argv[] )
     //
     std::getline( lineStream, inputField, ',' );
 
-    stringVector::iterator facilityIdItr = std::find( FacilityIds.begin(), FacilityIds.end(), inputField );
-    if( facilityIdItr != FacilityIds.end() )
+    stringVector::iterator facilityIdItr = std::find( FacilityId.begin(), FacilityId.end(), inputField );
+    if( facilityIdItr != FacilityId.end() )
       {
-      newRecord.facilityId = facilityIdItr - FacilityIds.begin();
+      newRecord.FacilityId = facilityIdItr - FacilityId.begin();
       }
     else
       {
-      newRecord.facilityId = FacilityIds.size();
-      FacilityIds.push_back( inputField );
+      newRecord.FacilityId = FacilityId.size();
+      FacilityId.push_back( inputField );
       }
 
     //
@@ -143,15 +143,15 @@ int main( int argc, const char * argv[] )
     //
     std::getline( lineStream, inputField, ',' );
 
-    stringVector::iterator facilityNameItr = std::find( FacilityNames.begin(), FacilityNames.end(), inputField );
-    if( facilityNameItr != FacilityNames.end() )
+    stringVector::iterator facilityNameItr = std::find( FacilityName.begin(), FacilityName.end(), inputField );
+    if( facilityNameItr != FacilityName.end() )
       {
-      newRecord.facilityName = facilityNameItr - FacilityNames.begin();
+      newRecord.FacilityName = facilityNameItr - FacilityName.begin();
       }
     else
       {
-      newRecord.facilityName = FacilityNames.size();
-      FacilityNames.push_back( inputField );
+      newRecord.FacilityName = FacilityName.size();
+      FacilityName.push_back( inputField );
       }
 
 
@@ -161,7 +161,7 @@ int main( int argc, const char * argv[] )
   std::cout << "Records read = " << records.size() << std::endl;
 
   std::cout << "First record = " << std::endl;
-  std::cout << records[0].hospitalServiceArea << std::endl;
+  std::cout << records[0].HospitalServiceArea << std::endl;
 
   std::cout << "Service areas " << std::endl;
   stringVector::const_iterator hsaItr = HospitalServiceArea.begin();
@@ -172,32 +172,32 @@ int main( int argc, const char * argv[] )
     }
 
   std::cout << "Counties " << std::endl;
-  stringVector::const_iterator hcItr = HospitalCounties.begin();
-  while( hcItr != HospitalCounties.end() )
+  stringVector::const_iterator hcItr = HospitalCounty.begin();
+  while( hcItr != HospitalCounty.end() )
     {
     std::cout << *hcItr << std::endl;
     ++hcItr;
     }
 
   std::cout << "Operating Certificate Numbers " << std::endl;
-  stringVector::const_iterator ocnItr = OperatingCertificateNumbers.begin();
-  while( ocnItr != OperatingCertificateNumbers.end() )
+  stringVector::const_iterator ocnItr = OperatingCertificateNumber.begin();
+  while( ocnItr != OperatingCertificateNumber.end() )
     {
     std::cout << *ocnItr << std::endl;
     ++ocnItr;
     }
 
   std::cout << "Facility Ids " << std::endl;
-  stringVector::const_iterator fiItr = FacilityIds.begin();
-  while( fiItr != FacilityIds.end() )
+  stringVector::const_iterator fiItr = FacilityId.begin();
+  while( fiItr != FacilityId.end() )
     {
     std::cout << *fiItr << std::endl;
     ++fiItr;
     }
 
   std::cout << "Facility Names " << std::endl;
-  stringVector::const_iterator fnItr = FacilityNames.begin();
-  while( fnItr != FacilityNames.end() )
+  stringVector::const_iterator fnItr = FacilityName.begin();
+  while( fnItr != FacilityName.end() )
     {
     std::cout << *fnItr << std::endl;
     ++fnItr;
