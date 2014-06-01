@@ -32,6 +32,7 @@ public:
   unsigned int hospitalServiceArea;
   unsigned int hospitalCounty;
   unsigned int operatingCertificateNumber;
+  unsigned int facilityId;
 
 };
 
@@ -42,6 +43,7 @@ typedef std::vector< std::string > stringVector;
 stringVector HospitalServiceArea;
 stringVector HospitalCounties;
 stringVector OperatingCertificateNumbers;
+stringVector FacilityIds;
 
 int main( int argc, const char * argv[] )
 {
@@ -118,6 +120,22 @@ int main( int argc, const char * argv[] )
       OperatingCertificateNumbers.push_back( inputField );
       }
 
+    //
+    //  Parse the Facility Id field
+    //
+    std::getline( lineStream, inputField, ',' );
+
+    stringVector::iterator facilityIdItr = std::find( FacilityIds.begin(), FacilityIds.end(), inputField );
+    if( facilityIdItr != FacilityIds.end() )
+      {
+      newRecord.facilityId = facilityIdItr - FacilityIds.begin();
+      }
+    else
+      {
+      newRecord.facilityId = FacilityIds.size();
+      FacilityIds.push_back( inputField );
+      }
+
 
     records.push_back( newRecord );
     }
@@ -149,6 +167,14 @@ int main( int argc, const char * argv[] )
     {
     std::cout << *ocnItr << std::endl;
     ++ocnItr;
+    }
+
+  std::cout << "Facility Ids " << std::endl;
+  stringVector::const_iterator fiItr = FacilityIds.begin();
+  while( fiItr != FacilityIds.end() )
+    {
+    std::cout << *fiItr << std::endl;
+    ++fiItr;
     }
 
 
