@@ -20,7 +20,25 @@
 #include <iterator>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <vector>
+#include <algorithm>
+
+
+class dischargeRecord
+{
+public:
+
+  unsigned int hospitalServiceArea;
+
+};
+
+typedef std::vector< dischargeRecord > dischargesRecords;
+
+typedef std::vector< std::string > stringVector;
+
+stringVector HospitalServiceArea;
+stringVector HospitalCounties;
 
 int main( int argc, const char * argv[] )
 {
@@ -29,7 +47,7 @@ int main( int argc, const char * argv[] )
 
   std::ifstream inputFile { inputFilename };
 
-  std::vector< std::string > records;
+  dischargesRecords records;
 
   std::string headers;
 
@@ -40,14 +58,44 @@ int main( int argc, const char * argv[] )
 
   std::string inputString;
 
+  dischargeRecord newRecord;
+
+  std::string inputField;
+
   while( !inputFile.eof() )
     {
     std::getline( inputFile, inputString );
-    records.push_back( inputString );
+    std::stringstream lineStream( inputString );
+
+    std::getline( lineStream, inputField, ',' );
+
+    stringVector::iterator serviceItr = std::find( HospitalServiceArea.begin(), HospitalServiceArea.end(), inputField );
+    if( serviceItr != HospitalServiceArea.end() )
+      {
+      newRecord.hospitalServiceArea = serviceItr - HospitalServiceArea.begin();
+      }
+    else
+      {
+      newRecord.hospitalServiceArea = HospitalServiceArea.size();
+      HospitalServiceArea.push_back( inputField );
+      }
+
+    records.push_back( newRecord );
     }
 
   std::cout << "Records read = " << records.size() << std::endl;
 
+  std::cout << "First record = " << std::endl;
+  std::cout << records[0].hospitalServiceArea << std::endl;
+
+  std::cout << "Service areas " << std::endl;
+
+  stringVector::const_iterator hsaItr = HospitalServiceArea.begin();
+  while( hsaItr != HospitalServiceArea.end() )
+    {
+    std::cout << *hsaItr << std::endl;
+    ++hsaItr;
+    }
 
   return 0;
 }
