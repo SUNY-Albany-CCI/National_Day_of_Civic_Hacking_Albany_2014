@@ -31,6 +31,7 @@ public:
 
   unsigned int hospitalServiceArea;
   unsigned int hospitalCounty;
+  unsigned int operatingCertificateNumber;
 
 };
 
@@ -40,6 +41,7 @@ typedef std::vector< std::string > stringVector;
 
 stringVector HospitalServiceArea;
 stringVector HospitalCounties;
+stringVector OperatingCertificateNumbers;
 
 int main( int argc, const char * argv[] )
 {
@@ -100,6 +102,22 @@ int main( int argc, const char * argv[] )
       HospitalCounties.push_back( inputField );
       }
 
+    //
+    //  Parse the Operating Certificate Number field
+    //
+    std::getline( lineStream, inputField, ',' );
+
+    stringVector::iterator operatingCertificateItr = std::find( OperatingCertificateNumbers.begin(), OperatingCertificateNumbers.end(), inputField );
+    if( operatingCertificateItr != OperatingCertificateNumbers.end() )
+      {
+      newRecord.operatingCertificateNumber = operatingCertificateItr - OperatingCertificateNumbers.begin();
+      }
+    else
+      {
+      newRecord.operatingCertificateNumber = OperatingCertificateNumbers.size();
+      OperatingCertificateNumbers.push_back( inputField );
+      }
+
 
     records.push_back( newRecord );
     }
@@ -124,6 +142,18 @@ int main( int argc, const char * argv[] )
     std::cout << *hcItr << std::endl;
     ++hcItr;
     }
+
+  std::cout << "Operating Certificate Numbers " << std::endl;
+  stringVector::const_iterator ocnItr = OperatingCertificateNumbers.begin();
+  while( ocnItr != OperatingCertificateNumbers.end() )
+    {
+    std::cout << *ocnItr << std::endl;
+    ++ocnItr;
+    }
+
+
+  std::cout << "Headers = " << std::endl;
+  std::cout << headers << std::endl;
 
  return 0;
 }
