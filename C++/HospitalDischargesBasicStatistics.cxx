@@ -33,6 +33,7 @@ public:
   unsigned int hospitalCounty;
   unsigned int operatingCertificateNumber;
   unsigned int facilityId;
+  unsigned int facilityName;
 
 };
 
@@ -44,6 +45,7 @@ stringVector HospitalServiceArea;
 stringVector HospitalCounties;
 stringVector OperatingCertificateNumbers;
 stringVector FacilityIds;
+stringVector FacilityNames;
 
 int main( int argc, const char * argv[] )
 {
@@ -136,6 +138,22 @@ int main( int argc, const char * argv[] )
       FacilityIds.push_back( inputField );
       }
 
+    //
+    //  Parse the Facility Name field
+    //
+    std::getline( lineStream, inputField, ',' );
+
+    stringVector::iterator facilityNameItr = std::find( FacilityNames.begin(), FacilityNames.end(), inputField );
+    if( facilityNameItr != FacilityNames.end() )
+      {
+      newRecord.facilityName = facilityNameItr - FacilityNames.begin();
+      }
+    else
+      {
+      newRecord.facilityName = FacilityNames.size();
+      FacilityNames.push_back( inputField );
+      }
+
 
     records.push_back( newRecord );
     }
@@ -175,6 +193,14 @@ int main( int argc, const char * argv[] )
     {
     std::cout << *fiItr << std::endl;
     ++fiItr;
+    }
+
+  std::cout << "Facility Names " << std::endl;
+  stringVector::const_iterator fnItr = FacilityNames.begin();
+  while( fnItr != FacilityNames.end() )
+    {
+    std::cout << *fnItr << std::endl;
+    ++fnItr;
     }
 
 
